@@ -4,9 +4,12 @@
 # Saves the log output to a log file.
 LOG_FILE="/var/log/login_checker.log"
 
+# Variable for IP-address.
+IP_ADDRESS=$(ip a show scope global | awk '/inet / {print $2}' | cut -d/ -f1 | head -n 1)
+
 # Logs time and date as well as which user logged in using what terminal.
 {
-	echo "$(date '+%Y-%m-%d %H:%M:%S')  User $USER logged in from $(tty)"
+	echo "$(date '+%Y-%m-%d %H:%M:%S')  User $USER logged in from $(tty) using IP adress $IP_ADDRESS"
 } >> "$LOG_FILE"
 exit 0
 
